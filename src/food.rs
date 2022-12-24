@@ -4,6 +4,7 @@ use crate::{
     ARENA_HEIGHT, ARENA_WIDTH,
 };
 use bevy::prelude::*;
+use iyes_loopless::prelude::*;
 use rand::random;
 
 #[derive(Component, Default, Reflect)]
@@ -17,6 +18,7 @@ impl Plugin for Food {
         app.register_type::<Food>()
             .add_event::<FoodEatendEvent>()
             .add_startup_system(spawn_food)
+            .add_system(spawn_food.run_on_event::<FoodEatendEvent>())
             .add_system(food_eaten);
     }
 }
